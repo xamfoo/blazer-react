@@ -25,4 +25,4 @@ _.extend(newBlazer.prototype, {
   }
 });
 
-Blazer = newBlazer();
+Blazer = new newBlazer;
