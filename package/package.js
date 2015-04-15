@@ -20,14 +20,15 @@ Package.onTest(function(api) {
 });
 
 function configure (api) {
-  api.versionsFrom('1.1.0');
+  api.versionsFrom('1.0.3.1');
   api.use([
     'ejson',
     'blaze',
     'reactive-var',
     'tracker',
     'check',
-    'underscore'
+    'underscore',
+    'templating'
   ], 'client');
 
   api.addFiles([
@@ -36,4 +37,6 @@ function configure (api) {
     'lib/component_static.js',
     'lib/helpers.js',
   ], 'client');
+
+  api.export('Blazer', 'client');
 }
