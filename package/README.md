@@ -187,7 +187,7 @@ Same as Template.instance()
 
 Same as Blaze.currentView
 
-**findAll, $, find, firstNode, lastNode, autorun, subscribe**
+**findAll, $, find, firstNode, lastNode, autorun, subscribe, subscriptionsReady**
 
 Convenience reference to instance methods.
 
