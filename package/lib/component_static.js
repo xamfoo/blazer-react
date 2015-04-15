@@ -40,7 +40,7 @@ _.extend(Component, {
       _.chain(specs)
       .pick('onCreated', 'onRendered', 'onDestroyed')
       .each(function (v, k) { tmpl[k](v); });
-    }, tmpl));
+    }, tmpl), specs);
   },
 
   _getContext: function () {
@@ -55,11 +55,11 @@ _.extend(Component, {
   },
   _wrapContext: function (func) {
     var self = this;
-    return function () { func.apply(self._getContext(), arguments); };
+    return function () { return func.apply(self._getContext(), arguments); };
   },
 
   _processSpecs: function (ctor, tmpl, specs) {
-    this._traverseMixins(_partial(function (ctor, tmpl, specs) {
+    this._traverseMixins(_.partial(function (ctor, tmpl, specs) {
       var self = this;
       var proto = ctor.prototype;
 
@@ -95,7 +95,7 @@ _.extend(Component, {
             else proto[k] = v;
         }
       });
-    }, ctor, tmpl).bind(this));
+    }, ctor, tmpl).bind(this), specs);
   },
 
   extend: function (tmpl, specs) {
