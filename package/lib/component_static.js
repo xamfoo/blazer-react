@@ -12,7 +12,7 @@ _.extend(Component, {
 
     // Set initialState
     if (component.getInitialState)
-      compoment._state.set(component.getInitialState());
+      component._state.set(component.getInitialState());
   },
 
   _traverseMixins: function (specHandler, specs, seen) {
