@@ -81,19 +81,20 @@ _.extend(Component, {
       }
 
       _.each(specs, function (v, k, specs) {
-        switch k {
+        switch (k) {
           case 'statics':
             _.extend(ctor, v);
+            break;
           case 'helpers':
             v = _.reduce(v, replaceMethodRef, {});
             tmpl.helpers(v);
+            break;
           case 'events':
             v = _.reduce(v, replaceMethodRef, {});
             tmpl.events(v);
-          default:
-            if (typeof v === 'function') proto[k] = self._wrapContext(v);
-            else proto[k] = v;
         }
+        if (typeof v === 'function') proto[k] = self._wrapContext(v);
+        else proto[k] = v;
       });
     }, ctor, tmpl).bind(this), specs);
   },
