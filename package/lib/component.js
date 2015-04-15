@@ -2,7 +2,7 @@ Component = function () {};
 
 _.extend(Component.prototype, {
   _verifyData: function (data) {
-    check(data, Match.ObjectIncluding(this.dataTypes));
+    this.dataTypes && check(data, Match.ObjectIncluding(this.dataTypes));
   },
 
   _onDataChange: function (component) {
@@ -17,7 +17,7 @@ _.extend(Component.prototype, {
     if (typeof data !== 'object') return;
 
     _.defaults(data, component._defaultData);
-    Blazer.isDev && component._verifyData();
+    Blazer.isDev && component._verifyData(data);
   },
 
   data: function () { return Template.instance().data; },
