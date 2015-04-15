@@ -61,7 +61,8 @@ _.extend(Component.prototype, {
 // Add convenience methods
 _.each(
   [
-    'findAll', '$', 'find', 'firstNode', 'lastNode', 'autorun', 'subscribe'
+    'findAll', '$', 'find', 'firstNode', 'lastNode', 'autorun', 'subscribe',
+    'subscriptionsReady'
   ],
   function (k) {
     Component.prototype[k] = function () {
