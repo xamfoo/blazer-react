@@ -20,7 +20,7 @@ _.extend(Component.prototype, {
     Blazer.isDev && component._verifyData(data);
   },
 
-  data: function () { return Template.instance().data; },
+  data: function () { return Template.instance().data || this._defaultData; },
 
   context: function () { return Template.currentData(); },
 
