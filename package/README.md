@@ -1,6 +1,6 @@
 # blazer-react
 
-Empowers Meteor's Blaze to work like Facebook's React.
+Blaze add-on using concepts from Facebook's React.
 
 This allows you to:
 
@@ -10,13 +10,31 @@ This allows you to:
 - Use the same `this` for helpers, event handlers and lifecycle methods declared
   in the component
 - Declare static methods on a component
-- Perform checks on data context passed to a template
+- Perform checks on data context passed to a template (in development mode)
+
+This is useful for those who do not wish to replace or change Blaze behavior.
+The API is minimal and use similarites between React and Meteor so it should be
+easy to use regardless of your background.
+
+This package only depends on Meteor core packages:
+
+- templating
+- blaze
+- tracker
+- ejson
+- reactive-var
+- check
+- underscore
+
+## Installation
+
+    meteor add blazer:react
 
 ## Background
 
 ### React to Blaze Mapping
 
-Blaze already contain implementation that is similar to React.
+The following features are not implemented since they are similar to React.
 
 React Terms/Concepts | Blaze Terms/Concepts
 ------------- | -------------
@@ -26,10 +44,9 @@ Component#render() | Blaze.render()
 Component#props | Template#data
 DOM element event bindings | Event Maps
 
-### Implementation
+### Package Implementation
 
-This package maps API/concepts of React to Blaze. Notably we exclude JSX to
-keep it lightweight.
+This is how the package implementation maps to React.
 
 React Terms/Concepts | Blazer Terms/Concepts
 ------------- | -------------
@@ -47,10 +64,6 @@ Other features:
 
 - `{{bThis}}` allow access to anything in the component specification.
 - `this.context()` shorthand access the data context
-
-## Installation
-
-    meteor add xamfoo:blazer-react
 
 ## API
 
