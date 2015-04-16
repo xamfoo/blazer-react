@@ -36,10 +36,11 @@ _.extend(Component, {
   },
 
   _registerTemplateHooks: function (tmpl, specs) {
-    this._traverseMixins(_.partial(function (tmpl, specs) {
+    var self = this;
+    self._traverseMixins(_.partial(function (tmpl, specs) {
       _.chain(specs)
       .pick('onCreated', 'onRendered', 'onDestroyed')
-      .each(function (v, k) { tmpl[k](v); });
+      .each(function (v, k) { tmpl[k](self._wrapContext(v)); });
     }, tmpl), specs);
   },
 
