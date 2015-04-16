@@ -6,12 +6,11 @@ This allows you to:
 
 - Create stateful components using concepts from React
 - Declare methods that can be accessed anywhere inside the template
-- Reuse common functionality by using mixins
-- Perform checks on data context passed to a template
+- Reuse code with mixins
 - Use the same `this` for helpers, event handlers and lifecycle methods declared
   in the component
-- Pass callback methods to other templates
 - Declare static methods on a component
+- Perform checks on data context passed to a template
 
 ## Background
 
@@ -25,7 +24,7 @@ Components | Templates
 Component instance | Template instance
 Component#render() | Blaze.render()
 Component#props | Template#data
-Virtual DOM event bindings | Event Maps
+DOM element event bindings | Event Maps
 
 ### Implementation
 
@@ -371,6 +370,9 @@ From React:
 > are guaranteed to be called. Methods defined on mixins run in the order mixins
 > were listed, followed by a method call on the component.
 
+A mixin may also include other mixins and mixins may include each other. It is
+possible to override an existing method in a mixin by declaring one in the
+component with the same name.
 
 Example:
 
