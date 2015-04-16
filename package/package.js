@@ -2,7 +2,7 @@ Package.describe({
   name: 'blazer:react',
   version: '0.1.0',
   // Brief, one-line summary of the package.
-  summary: 'Blaze add-on using concepts from React',
+  summary: "Add-on for Blaze based on Facebook's React",
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/xamfoo/meteor-blazer-react',
   // By default, Meteor will default to using README.md for documentation.

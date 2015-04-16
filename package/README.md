@@ -1,6 +1,6 @@
 # blazer-react
 
-Blaze add-on using concepts from Facebook's React.
+Add-on for Blaze based on Facebook's React.
 
 This allows you to:
 
@@ -16,7 +16,7 @@ This is useful for those who do not wish to replace or change Blaze behavior.
 The API is minimal and use similarites between React and Meteor so it should be
 easy to use regardless of your background.
 
-This package only depends on Meteor core packages:
+This package depends only on Meteor core packages:
 
 - templating
 - blaze
