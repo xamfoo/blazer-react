@@ -471,3 +471,8 @@ Example:
         //...
       },
     });
+
+## Contributing
+
+- Feel free to raise any issues in the repo
+- Fork and send in pull requests
