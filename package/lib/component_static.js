@@ -114,6 +114,7 @@ _.extend(Component, {
       this._stateDep = new Tracker.Dependency;
     };
 
+    ctor.prototype.constructor = ctor;
     ctor.prototype = new Component;
     self._processSpecs(ctor, tmpl, specs);
 
