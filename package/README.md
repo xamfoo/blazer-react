@@ -379,10 +379,10 @@ Example:
         this.intervals = [];
       },
       setInterval: function() {
-        this.intervals.push(setInterval.apply(null, arguments));
+        this.intervals.push(Meteor.setInterval.apply(null, arguments));
       },
       onDestroyed: function() {
-        this.intervals.map(clearInterval);
+        this.intervals.map(Meteor.clearInterval);
       }
     };
 
