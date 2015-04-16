@@ -46,17 +46,23 @@ _.extend(Component, {
 
   _getContext: function () {
     var context, instance;
+    function closestInstance (view) {
+      return view &&
+        (view._templateInstance || closestInstance(view.parentView));
+    }
     if (this instanceof Blaze.View) context = this._bComponent;
     else if (this instanceof Component) context = this;
     else {
-      instance = Template.instance();
+      instance = Template.instance() || closestInstance(Blaze.currentView);
       context = instance && instance._bComponent;
     }
     return context;
   },
   _wrapContext: function (func) {
     var self = this;
-    return function () { return func.apply(self._getContext(), arguments); };
+    return function () {
+      return func.apply(self._getContext.call(this) || this, arguments);
+    };
   },
 
   _processSpecs: function (ctor, tmpl, specs) {
