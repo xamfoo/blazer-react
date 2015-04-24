@@ -24,7 +24,7 @@ Blazer.component('body', {
   hours: _.range(0, 12),
 
   handData: function() {
-    var time = this.state().time;
+    var time = this.state.get('time');
     return {
       hourDegrees: time.getHours() * 30,
       minuteDegrees: time.getMinutes() * 6,
