@@ -26,9 +26,17 @@ _.extend(Component.prototype, {
 
   view: function () { return Blaze.currentView; },
 
-  state: function () {
-    this._stateDep.depend();
-    return this._state.get();
+  _writeState: function (newState) {
+    var self = this;
+    var newKeys = _.keys(newState);
+    var toRemove = _.difference(_.keys(self.state.keys), newKeys);
+    for (var i=0; i<toRemove.length; i+=1) {
+      self.state.set(toRemove[i], null);
+      delete self.state.keys[toRemove[i]];
+    }
+    for (var i=0; i<newKeys.length; i+=1) {
+      self.state.set(newKeys[i], newState[newKeys[i]]);
+    }
   },
 
   setState: function (partialState, callback) {
@@ -38,11 +46,13 @@ _.extend(Component.prototype, {
       var newState;
       if (typeof partialState === 'object') newState = partialState;
       else if (typeof partialState === 'function')
-        newState = partialState(self._state.get(), self.instance.data);
+        newState = partialState(
+          _.extend({}, self.state.keys), self.instance.data
+        );
 
       if (!newState) return;
 
-      self._state.set(newState);
+      self._writeState(newState);
       callback && Tracker.afterFlush(callback);
     });
   },
@@ -50,7 +60,7 @@ _.extend(Component.prototype, {
   replaceState: function (newState, callback) {
     var self = this;
     typeof newState === 'object' && Tracker.afterFlush(function () {
-      self._state.set(newState);
+      self._writeState(newState);
       callback && Tracker.afterFlush(callback);
     });
   },
@@ -61,8 +71,7 @@ _.extend(Component.prototype, {
 // Add convenience methods
 _.each(
   [
-    'findAll', '$', 'find', 'firstNode', 'lastNode', 'autorun', 'subscribe',
-    'subscriptionsReady'
+    'findAll', '$', 'find', 'autorun', 'subscribe', 'subscriptionsReady'
   ],
   function (k) {
     Component.prototype[k] = function () {

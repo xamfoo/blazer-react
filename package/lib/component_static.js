@@ -12,7 +12,7 @@ _.extend(Component, {
 
     // Set initialState
     if (component.getInitialState)
-      component._state.set(component.getInitialState());
+      component._writeState(component.getInitialState());
   },
 
   _traverseMixins: function (specHandler, specs, seen) {
@@ -111,7 +111,7 @@ _.extend(Component, {
     var self = this;
 
     var ctor = function () {
-      this._state = new ReactiveVar({}, EJSON.equals);
+      this.state = new ReactiveDict;
       this._stateDep = new Tracker.Dependency;
     };
 

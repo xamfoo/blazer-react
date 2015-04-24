@@ -24,7 +24,7 @@ function configure (api) {
   api.use([
     'ejson',
     'blaze',
-    'reactive-var',
+    'reactive-dict',
     'tracker',
     'check',
     'underscore',
