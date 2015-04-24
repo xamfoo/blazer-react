@@ -1,6 +1,7 @@
 # blazer-react
 
-Add-on for Blaze based on Facebook's React.
+Add-on for Blaze based on Facebook's React. Works well with your existing Meteor
+applications that use Blaze.
 
 This allows you to:
 
@@ -22,7 +23,7 @@ This package depends only on Meteor core packages:
 - blaze
 - tracker
 - ejson
-- reactive-var
+- reactive-dict
 - check
 - underscore
 
@@ -125,15 +126,16 @@ Example:
       //...
     });
 
-**state()**
+**state**
 
-Returns the `state` object of the template instance
+Returns the `state` object of the template instance, which is a ReactiveDict.
+Refer to Meteor docs about Session for its methods: `get`, `equals`, `set`
 
 Example:
 
     Blazer.component('chat', {
       messages: function () {
-        return Messages.find({room: this.state().roomId});
+        return Messages.find({room: this.state.get('roomId')});
       },
       //...
     });
@@ -475,4 +477,9 @@ Example:
 ## Contributing
 
 - Feel free to raise any issues in the repo
-- Fork and send in pull requests
+- Fork and send in your pull requests
+
+## Future Work
+
+- Consider adding lifecycle methods componentWillUpdate, componentDidUpdate,
+  shouldComponentUpdate, componentWillReceiveProps
