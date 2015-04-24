@@ -82,7 +82,8 @@ _.extend(Component, {
       );
 
       function replaceMethodRef (acc, handler, k) {
-        if (typeof handler === 'string') handler = specs[handler];
+        if (typeof handler === 'string')
+          handler = specs[handler] || proto[handler];
         handler && (acc[k] = self._wrapContext(handler));
         return acc;
       }
