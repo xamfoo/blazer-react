@@ -26,17 +26,26 @@ _.extend(Component.prototype, {
 
   view: function () { return Blaze.currentView; },
 
-  _writeState: function (newState) {
+  _writeState: function (newState, replace) {
     var self = this;
     var newKeys = _.keys(newState);
+    for (var i=0; i<newKeys.length; i+=1) {
+      self.state.set(newKeys[i], newState[newKeys[i]]);
+    }
+    if (!replace) return;
+
     var toRemove = _.difference(_.keys(self.state.keys), newKeys);
     for (var i=0; i<toRemove.length; i+=1) {
       self.state.set(toRemove[i], null);
       delete self.state.keys[toRemove[i]];
     }
-    for (var i=0; i<newKeys.length; i+=1) {
-      self.state.set(newKeys[i], newState[newKeys[i]]);
-    }
+  },
+
+  _getState: function () {
+    var keys = _.keys(this.state.keys);
+    var res = {};
+    for (var i=0; i<keys.length; i+=1) { res[keys[i]] = this.state.get(keys[i]); }
+    return res;
   },
 
   setState: function (partialState, callback) {
@@ -47,7 +56,7 @@ _.extend(Component.prototype, {
       if (typeof partialState === 'object') newState = partialState;
       else if (typeof partialState === 'function')
         newState = partialState(
-          _.extend({}, self.state.keys), self.instance.data
+          self._getState(), self.instance.data
         );
 
       if (!newState) return;
@@ -60,7 +69,7 @@ _.extend(Component.prototype, {
   replaceState: function (newState, callback) {
     var self = this;
     typeof newState === 'object' && Tracker.afterFlush(function () {
-      self._writeState(newState);
+      self._writeState(newState, true);
       callback && Tracker.afterFlush(callback);
     });
   },
