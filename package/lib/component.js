@@ -51,7 +51,7 @@ _.extend(Component.prototype, {
   setState: function (partialState, callback) {
     var self = this;
 
-    partialState && Tracker.afterFlush(function () {
+    partialState && Tracker.nonreactive(function () {
       var newState;
       if (typeof partialState === 'object') newState = partialState;
       else if (typeof partialState === 'function')
