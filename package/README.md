@@ -1,21 +1,21 @@
 # blazer-react
 
-Add-on for Blaze based on Facebook's React. Works well with your existing Meteor
-applications that use Blaze.
+Add-on for Meteor Blaze using concepts from Facebook's React. If you wish to
+use React instead check out https://github.com/reactjs/react-meteor.
 
-This allows you to:
+For Blaze users, this allows you to:
 
-- Create stateful components using concepts from React
+- Create stateful components in Meteor using concepts from React
 - Declare methods that can be accessed anywhere inside the template
-- Reuse code with mixins
+- Reuse code in different templates with mixins
 - Use the same `this` for helpers, event handlers and lifecycle methods declared
   in the component
 - Declare static methods on a component
 - Perform checks on data context passed to a template (in development mode)
 
-This is useful for those who do not wish to replace or change Blaze behavior.
-The API is minimal and use similarites between React and Meteor so it should be
-easy to use regardless of your background.
+This package extends but does not change Blaze behavior so it plays well with
+existing Meteor code. The API is minimal and similar to both React and Meteor
+so it should be easy to use regardless of your background.
 
 This package depends only on Meteor core packages:
 
@@ -79,8 +79,8 @@ If `specs` is not specified, the `statics` object of the component is returned.
 
 **Blazer.isDev**
 
-This value is true if client URL hostname is `localhost`. Setting to false
-disables checking for `dataTypes`.
+By default this value is true if client URL hostname is `localhost`. Setting to
+false disables checking for `dataTypes`.
 
 ### Component methods
 
@@ -129,7 +129,8 @@ Example:
 **state**
 
 Returns the `state` object of the template instance, which is a ReactiveDict.
-Refer to Meteor docs about Session for its methods: `get`, `equals`, `set`
+Refer to Meteor docs about [Session](http://docs.meteor.com/#/full/session)
+and its methods: `get`, `equals`, `set`, `setDefault`
 
 Example:
 
@@ -142,16 +143,17 @@ Example:
 
 **setState(function|object nextState[, function callback])**
 
-Merges nextState with the current state. This is the primary method you use to
-trigger UI updates from event handlers and server request callbacks.
+Adapted from React:
+> Merges nextState with the current state. This is the primary method you use to
+> trigger UI updates from event handlers and server request callbacks.
 
-The first argument can be an object (containing zero or more keys to update) or
-a function (of state and props) that returns an object containing keys to
-update.
+> The first argument can be an object (containing zero or more keys to update)
+> or a function (of state and props) that returns an object containing keys to
+> update.
 
-It's also possible to pass a function with the signature function(state, data).
-This can be useful in some cases when you want to enqueue an atomic update that
-consults the previous value of state+data before setting any values.
+> It's also possible to pass a function with the signature function(state, data).
+> This can be useful in some cases when you want to enqueue an atomic update that
+> consults the previous value of state+data before setting any values.
 
 Example:
 
@@ -182,7 +184,7 @@ Example:
 
 **forceUpdate([function callback])**
 
-Triggers recomputation for all template helpers reading from `state()`
+Triggers recomputation for all template helpers reading from `state`
 
 Example:
 
@@ -476,10 +478,11 @@ Example:
 
 ## Contributing
 
-- Feel free to raise any issues in the repo
+- Feel free to raise issues and feature requests in the repo
 - Fork and send in your pull requests
 
 ## Future Work
 
+- Add unit tests
 - Consider adding lifecycle methods componentWillUpdate, componentDidUpdate,
   shouldComponentUpdate, componentWillReceiveProps
