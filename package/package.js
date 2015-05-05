@@ -1,6 +1,6 @@
 Package.describe({
   name: 'blazer:react',
-  version: '0.1.0',
+  version: '0.1.1',
   // Brief, one-line summary of the package.
   summary: "Blaze add-on: Create stateful components with methods and mixins like in Facebook's React",
   // URL to the Git repository containing the source code for this package.
