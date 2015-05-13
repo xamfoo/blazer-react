@@ -93,9 +93,12 @@ _.extend(Component, {
       _.each(specs, function (v, k, specs) {
         switch (k) {
           case 'getInitialState':
-            ctor.prototype._getInitialState.push(self._wrapContext(v));
+            proto._getInitialState.push(self._wrapContext(v));
             break;
           case 'dataTypes':
+            proto.dataTypes = proto.dataTypes || {};
+            _.extend(proto.dataTypes, v);
+            return;
           case 'statics':
             _.extend(ctor, v);
             break;
