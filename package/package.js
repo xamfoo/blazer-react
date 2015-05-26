@@ -1,6 +1,6 @@
 Package.describe({
   name: 'blazer:react',
-  version: '0.1.1',
+  version: '0.2.0',
   summary: "Blaze add-on: Create stateful components with methods and mixins like in Facebook's React",
   git: 'https://github.com/xamfoo/blazer-react',
   documentation: 'README.md'
@@ -16,7 +16,7 @@ Package.onTest(function(api) {
 });
 
 function configure (api) {
-  api.versionsFrom('1.0.3.1');
+  api.versionsFrom('1.0.4.1');
   api.use([
     'blaze',
     'reactive-dict',
@@ -25,7 +25,7 @@ function configure (api) {
     'underscore',
     'templating'
   ], 'client');
-  api.use('xamfoo:reactive-obj', 'client', {weak: true});
+  api.use('xamfoo:reactive-obj@0.4.0', 'client', {weak: true});
 
   api.addFiles([
     'lib/blazer.js',
