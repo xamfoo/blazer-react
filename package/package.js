@@ -25,7 +25,7 @@ function configure (api) {
     'underscore',
     'templating'
   ], 'client');
-  api.use('xamfoo:reactive-obj', 'client', {weak: true});
+  api.use('xamfoo:reactive-obj@0.4.0', 'client', {weak: true});
 
   api.addFiles([
     'lib/blazer.js',
