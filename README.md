@@ -3,7 +3,7 @@
 Add-on for Meteor Blaze using concepts from Facebook's React. If you wish to
 use React instead check out https://github.com/reactjs/react-meteor.
 
-For Blaze users, this allows you to:
+This allows you to:
 
 - Create stateful components in Meteor using concepts from React
 - Declare methods that can be accessed anywhere inside the template
@@ -22,10 +22,13 @@ This package depends only on Meteor core packages:
 - templating
 - blaze
 - tracker
-- ejson
 - reactive-dict
 - check
 - underscore
+
+Optional dependencies:
+
+- xamfoo:reactive-obj
 
 ## Installation
 
