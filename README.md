@@ -69,7 +69,7 @@ Other features:
 - `{{bThis}}` allow access to anything in the component specification.
 - `this.context()` shorthand access the data context
 
-## API
+## Usage
 
 ### Global methods
 
