@@ -120,7 +120,8 @@ _.extend(Component, {
     var self = this;
 
     var ctor = function () {
-      this.state = new ReactiveDict;
+      if (typeof ReactiveObj !== 'undefined') this.state = new ReactiveObj;
+      else this.state = new ReactiveDict;
       this._stateDep = new Tracker.Dependency;
     };
 
