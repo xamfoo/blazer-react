@@ -11,8 +11,10 @@ _.extend(Component, {
       inst.autorun(_.partial(component._onDataChange, component));
 
     // Set initialState
-    if (component.getInitialState)
-      component._writeState(component.getInitialState());
+    for (var i=0, s; i<component._getInitialState.length; i+=1) {
+      s = component._getInitialState[i]();
+      if (s) component._writeState(s);
+    }
   },
 
   _traverseMixins: function (specHandler, specs, seen) {
@@ -90,6 +92,13 @@ _.extend(Component, {
 
       _.each(specs, function (v, k, specs) {
         switch (k) {
+          case 'getInitialState':
+            proto._getInitialState.push(self._wrapContext(v));
+            break;
+          case 'dataTypes':
+            proto.dataTypes = proto.dataTypes || {};
+            _.extend(proto.dataTypes, v);
+            return;
           case 'statics':
             _.extend(ctor, v);
             break;
@@ -111,12 +120,14 @@ _.extend(Component, {
     var self = this;
 
     var ctor = function () {
-      this.state = new ReactiveDict;
+      if (typeof ReactiveObj !== 'undefined') this.state = new ReactiveObj;
+      else this.state = new ReactiveDict;
       this._stateDep = new Tracker.Dependency;
     };
 
-    ctor.prototype.constructor = ctor;
     ctor.prototype = new Component;
+    ctor.prototype.constructor = ctor;
+    ctor.prototype._getInitialState = [];
     self._processSpecs(ctor, tmpl, specs);
 
     return ctor;
