@@ -131,9 +131,13 @@ Example:
 
 **state**
 
-Returns the `state` object of the template instance, which is a ReactiveDict.
-Refer to Meteor docs about [Session](http://docs.meteor.com/#/full/session)
-and its methods: `get`, `equals`, `set`, `setDefault`
+Returns the `state` object of the template instance, which is a `ReactiveDict`
+by default. If `ReactiveObj` exists it will be used instead of `ReactiveDict`.
+Methods available in both `ReactiveDict` and `ReactiveObj` are: `get()`,
+`equals()`, `set()`, `setDefault()`
+- [Documentation for `ReactiveDict` in `Session`](http://docs.meteor.com/#/full/session)
+- [Documentation for `ReactiveObj`](https://github.com/xamfoo/reactive-obj)
+
 
 Example:
 
