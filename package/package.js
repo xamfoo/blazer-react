@@ -16,7 +16,7 @@ Package.onTest(function(api) {
 });
 
 function configure (api) {
-  api.versionsFrom('1.0.3.1');
+  api.versionsFrom('1.0.4.1');
   api.use([
     'blaze',
     'reactive-dict',
