@@ -28,6 +28,7 @@ function configure (api) {
   api.use('xamfoo:reactive-obj@0.4.0', 'client', {weak: true});
 
   api.addFiles([
+    'lib/import.js',
     'lib/blazer.js',
     'lib/component.js',
     'lib/component_static.js',
