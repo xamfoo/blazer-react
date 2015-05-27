@@ -1,7 +1,6 @@
 # blazer-react
 
-Add-on for Meteor Blaze using concepts from Facebook's React. If you wish to
-use React instead check out https://github.com/reactjs/react-meteor.
+Combines Blaze with ideas from Facebook's React.
 
 This allows you to:
 
@@ -17,6 +16,58 @@ This package extends but does not change Blaze behavior so it plays well with
 existing Meteor code. The API is minimal and similar to both React and Meteor
 so it should be easy to use regardless of your background.
 
+## Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+ 
+
+- [Installation](#installation)
+  - [Dependencies](#dependencies)
+- [Usage](#usage)
+  - [Global methods](#global-methods)
+    - [`Blazer.component(templateName|Blaze.Template, [specs])`](#blazercomponenttemplatename%7Cblazetemplate-specs)
+    - [`Blazer.isDev`](#blazerisdev)
+  - [Component methods](#component-methods)
+    - [`component.data()`](#componentdata)
+    - [`component.context()`](#componentcontext)
+    - [`component.state`](#componentstate)
+    - [`component.setState(function|object nextState[, function callback])`](#componentsetstatefunction%7Cobject-nextstate-function-callback)
+    - [`component.replaceState(object nextState[, function callback])`](#componentreplacestateobject-nextstate-function-callback)
+    - [`component.forceUpdate([function callback])`](#componentforceupdatefunction-callback)
+    - [`component.instance`](#componentinstance)
+    - [`component.view()`](#componentview)
+    - [`component.findAll, $, find, firstNode, lastNode, autorun, subscribe, subscriptionsReady`](#componentfindall--find-firstnode-lastnode-autorun-subscribe-subscriptionsready)
+  - [Spacebars helpers](#spacebars-helpers)
+    - [`{{bState}}`](#bstate)
+    - [`{{bData}}`](#bdata)
+    - [`{{bThis}}`](#bthis)
+  - [Component Specifications](#component-specifications)
+    - [`specs.getInitialState()`](#specsgetinitialstate)
+    - [`specs.getDefaultData()`](#specsgetdefaultdata)
+    - [`specs.events {}`](#specsevents-)
+    - [`specs.helpers {}`](#specshelpers-)
+    - [`specs.dataTypes {key: pattern}`](#specsdatatypes-key-pattern)
+    - [`specs.mixins [ {} ]`](#specsmixins---)
+    - [`specs.statics {}`](#specsstatics-)
+    - [Lifecycle Methods](#lifecycle-methods)
+      - [`specs.onCreated()`](#specsoncreated)
+      - [`specs.onRendered()`](#specsonrendered)
+      - [`specs.onDestroyed()`](#specsondestroyed)
+- [Background](#background)
+  - [React to Blaze Mapping](#react-to-blaze-mapping)
+  - [Package Implementation](#package-implementation)
+- [Contributing](#contributing)
+- [Future Work](#future-work)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+## Installation
+
+    meteor add blazer:react
+
+### Dependencies
+
 This package depends only on Meteor core packages:
 
 - templating
@@ -30,57 +81,18 @@ Optional dependencies:
 
 - xamfoo:reactive-obj
 
-## Installation
-
-    meteor add blazer:react
-
-## Background
-
-### React to Blaze Mapping
-
-The following features are not implemented since they are similar to React.
-
-React Terms/Concepts | Blaze Terms/Concepts
-------------- | -------------
-Components | Templates
-Component instance | Template instance
-Component#render() | Blaze.render()
-Component#props | Template#data
-DOM element event bindings | Event Maps
-
-### Package Implementation
-
-This is how the package implementation maps to React.
-
-React Terms/Concepts | Blazer Terms/Concepts
-------------- | -------------
-React.createClass() | Blazer.component()
-`this.state`, `this.props` | `this.state()`, `this.data()` in template events, helpers and lifecycle. `{{bState}}` and `{{bData}}` template helpers.
-Component#getDefaultProps | Component#getDefaultData
-Component#propTypes | Component#dataTypes using `check` and `Match` patterns
-Component#statics | Static methods for Templates
-Component#getInitialState, #mixins | 1-1 mapping
-Component#componentWillMount | Component#onCreated
-Component#componentDidMount | Component#onRendered
-Component#componentWillUnmount | Component#onDestroyed is similar but has no DOM access
-
-Other features:
-
-- `{{bThis}}` allow access to anything in the component specification.
-- `this.context()` shorthand access the data context
-
 ## Usage
 
 ### Global methods
 
-**Blazer.component(templateName|Blaze.Template, [specs])**
+#### `Blazer.component(templateName|Blaze.Template, [specs])`
 
 Add component specifications for a Blaze template. See *Component
 Specifications* for more information.
 
 If `specs` is not specified, the `statics` object of the component is returned.
 
-**Blazer.isDev**
+#### `Blazer.isDev`
 
 By default this value is true if client URL hostname is `localhost`. Setting to
 false disables checking for `dataTypes`.
@@ -89,7 +101,7 @@ false disables checking for `dataTypes`.
 
 Component methods are attached to all Blaze template instances.
 
-**data()**
+#### `component.data()`
 
 Same as Template.instance().data
 
@@ -107,7 +119,7 @@ Example:
       //...
     });
 
-**context()**
+#### `component.context()`
 
 Same as Template.currentData()
 
@@ -129,7 +141,7 @@ Example:
       //...
     });
 
-**state**
+#### `component.state`
 
 Returns the `state` object of the template instance, which is a `ReactiveDict`
 by default. If `ReactiveObj` exists it will be used instead of `ReactiveDict`.
@@ -148,7 +160,7 @@ Example:
       //...
     });
 
-**setState(function|object nextState[, function callback])**
+#### `component.setState(function|object nextState[, function callback])`
 
 Adapted from React:
 > Merges nextState with the current state. This is the primary method you use to
@@ -180,7 +192,7 @@ Example:
       //...
     });
 
-**replaceState(object nextState[, function callback])**
+#### `component.replaceState(object nextState[, function callback])`
 
     Blazer.component('form', {
       resetForm: function () {
@@ -189,7 +201,7 @@ Example:
       //...
     });
 
-**forceUpdate([function callback])**
+#### `component.forceUpdate([function callback])`
 
 Triggers recomputation for all template helpers reading from `state`
 
@@ -202,21 +214,21 @@ Example:
       //...
     });
 
-**instance**
+#### `component.instance`
 
 Same as Template.instance()
 
-**view()**
+#### `component.view()`
 
 Same as Blaze.currentView
 
-**findAll, $, find, firstNode, lastNode, autorun, subscribe, subscriptionsReady**
+#### `component.findAll, $, find, firstNode, lastNode, autorun, subscribe, subscriptionsReady`
 
 Convenience reference to instance methods.
 
 ### Spacebars helpers
 
-**{{bState}}**
+#### `{{bState}}`
 
 Helper to read from `state()`
 
@@ -229,7 +241,7 @@ Example:
       {{/each}}
     </template>
 
-**{{bData}}**
+#### `{{bData}}`
 
 Helper to read from `data()`. Useful when a key of parent data has been shadowed
 by a data context.
@@ -244,7 +256,7 @@ Example:
       {{/each}}
     </template>
 
-**{{bThis}}**
+#### `{{bThis}}`
 
 Access anything specified inside a Blazer component. In some cases this may be
 an alternative to declaring template helpers.
@@ -260,7 +272,7 @@ Example:
 
 ### Component Specifications
 
-**getInitialState()**
+#### `specs.getInitialState()`
 
 Invoked once when template is created. The return value will be used as
 the initial value of this.state.
@@ -276,7 +288,7 @@ Example:
       //...
     });
 
-**getDefaultData()**
+#### `specs.getDefaultData()`
 
 Invoked once and cached when the component is specified. Values in the
 mapping will be set on `this.data` if the key is not specified by the
@@ -297,7 +309,7 @@ Example:
       //...
     });
 
-**events {}**
+#### `specs.events {}`
 
 Maps events to method names or functions.
 
@@ -318,7 +330,7 @@ Example:
       //...
     });
 
-**helpers {}**
+#### `specs.helpers {}`
 
 Maps template helpers to method names or functions.
 
@@ -339,7 +351,7 @@ Example:
       //...
     });
 
-**dataTypes {key: pattern}**
+#### `specs.dataTypes {key: pattern}`
 
 > key
 
@@ -373,7 +385,7 @@ Example:
       //...
     });
 
-**mixins [ {} ]**
+#### `specs.mixins [ {} ]`
 
 From React:
 > Components are the best way to reuse code in React, but sometimes very
@@ -433,7 +445,7 @@ HTML
       </p>
     </template>
 
-**statics {}**
+#### `specs.statics {}`
 
 From React:
 
@@ -463,11 +475,11 @@ Example:
 
 Same as using Template lifecycle methods.
 
-**onCreated()**
+##### `specs.onCreated()`
 
-**onRendered()**
+##### `specs.onRendered()`
 
-**onDestroyed()**
+##### `specs.onDestroyed()`
 
 Example:
 
@@ -482,6 +494,41 @@ Example:
         //...
       },
     });
+
+## Background
+
+### React to Blaze Mapping
+
+The following features are not implemented since they are similar to React.
+
+React Terms/Concepts | Blaze Terms/Concepts
+------------- | -------------
+Components | Templates
+Component instance | Template instance
+Component#render() | Blaze.render()
+Component#props | Template#data
+DOM element event bindings | Event Maps
+
+### Package Implementation
+
+This is how the package implementation maps to React.
+
+React Terms/Concepts | Blazer Terms/Concepts
+------------- | -------------
+React.createClass() | Blazer.component()
+`this.state`, `this.props` | `this.state()`, `this.data()` in template events, helpers and lifecycle. `{{bState}}` and `{{bData}}` template helpers.
+Component#getDefaultProps | Component#getDefaultData
+Component#propTypes | Component#dataTypes using `check` and `Match` patterns
+Component#statics | Static methods for Templates
+Component#getInitialState, #mixins | Same
+Component#componentWillMount | Component#onCreated
+Component#componentDidMount | Component#onRendered
+Component#componentWillUnmount | Component#onDestroyed is similar but has no DOM access
+
+Other features:
+
+- `{{bThis}}` allow access to anything in the component specification.
+- `this.context()` shorthand access the data context
 
 ## Contributing
 
