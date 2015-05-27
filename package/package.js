@@ -1,7 +1,7 @@
 Package.describe({
   name: 'blazer:react',
-  version: '0.2.0',
-  summary: "Blaze add-on: Create stateful components with methods and mixins like in Facebook's React",
+  version: '0.2.1',
+  summary: "Blaze with React: Create stateful components with methods and mixins like in Facebook's React",
   git: 'https://github.com/xamfoo/blazer-react',
   documentation: 'README.md'
 });
