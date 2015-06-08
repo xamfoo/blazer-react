@@ -46,24 +46,38 @@ _.extend(Component, {
     }, tmpl), specs);
   },
 
-  _getContext: function () {
+  _getContext: function (/*arguments*/) {
+    var self = this;
     var context, instance;
     function closestInstance (view) {
       return view &&
         (view._templateInstance || closestInstance(view.parentView));
     }
-    if (this instanceof Blaze.View) context = this._bComponent;
-    else if (this instanceof Component) context = this;
+    if (self instanceof Blaze.View) context = self._bComponent;
+    else if (self instanceof Component) context = self;
     else {
       instance = Template.instance() || closestInstance(Blaze.currentView);
       context = instance && instance._bComponent;
     }
+
+    if (arguments[1] && arguments[1] instanceof Blaze.TemplateInstance &&
+        arguments[0] && arguments[0] instanceof jQuery.Event) {
+      return (function (eventContext) {
+        var newContext;
+        var ctor = function () {};
+        ctor.prototype = context;
+        newContext = new ctor;
+        newContext.context = eventContext;
+        return newContext;
+      }(function () { return self; }));
+    }
+
     return context;
   },
   _wrapContext: function (func) {
     var self = this;
     return function () {
-      return func.apply(self._getContext.call(this) || this, arguments);
+      return func.apply(self._getContext.apply(this, arguments) || this, arguments);
     };
   },
 
@@ -90,9 +104,9 @@ _.extend(Component, {
           else if (proto[handler])
             acc[k] = proto[handler];
         }
-        if (typeof handler === 'string')
-          handler = specs[handler] || proto[handler];
-        handler && (acc[k] = self._wrapContext(handler));
+        else if (typeof handler === 'function')
+          acc[k] = self._wrapContext(handler);
+
         return acc;
       }
 
