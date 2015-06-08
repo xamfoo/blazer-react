@@ -121,12 +121,11 @@ Example:
 
 #### `component.context()`
 
-Same as Template.currentData()
+Same as Template.currentData() except for events, where the data context of
+the event would be returned instead.
 
 > - Inside an `onCreated`, `onRendered`, or `onDestroyed` callback, returns
 > the data context of the template.
-> - Inside an event handler, returns the data context of the template on which
-> this event handler was defined.
 > - Inside a helper, returns the data context of the DOM node where the helper
 > was used.
 
